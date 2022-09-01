@@ -6,9 +6,7 @@ import BreezeInputError from "@/Components/InputError.vue";
 import BreezeLabel from "@/Components/Label.vue";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
 
-defineProps({
-    status: String,
-});
+defineProps<{ status: string }>();
 
 const form = useForm({
     email: "",
@@ -38,9 +36,9 @@ const submit = () => {
                 <BreezeLabel for="email" value="Email" />
                 <BreezeInput
                     id="email"
+                    v-model="form.email"
                     type="email"
                     class="mt-1 block w-full"
-                    v-model="form.email"
                     required
                     autofocus
                     autocomplete="username"

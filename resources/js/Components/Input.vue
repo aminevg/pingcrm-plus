@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 
-defineProps(["modelValue"]);
+defineProps<{ modelValue: string }>();
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -20,9 +20,9 @@ function onInput(event: Event) {
 
 <template>
     <input
+        ref="input"
         class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
         :value="modelValue"
         @input="onInput"
-        ref="input"
     />
 </template>

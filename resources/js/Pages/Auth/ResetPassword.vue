@@ -6,10 +6,10 @@ import BreezeInputError from "@/Components/InputError.vue";
 import BreezeLabel from "@/Components/Label.vue";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
 
-const props = defineProps({
-    email: String,
-    token: String,
-});
+const props = defineProps<{
+    email: string;
+    token: string;
+}>();
 
 const form = useForm({
     token: props.token,
@@ -34,9 +34,9 @@ const submit = () => {
                 <BreezeLabel for="email" value="Email" />
                 <BreezeInput
                     id="email"
+                    v-model="form.email"
                     type="email"
                     class="mt-1 block w-full"
-                    v-model="form.email"
                     required
                     autofocus
                     autocomplete="username"
@@ -48,9 +48,9 @@ const submit = () => {
                 <BreezeLabel for="password" value="Password" />
                 <BreezeInput
                     id="password"
+                    v-model="form.password"
                     type="password"
                     class="mt-1 block w-full"
-                    v-model="form.password"
                     required
                     autocomplete="new-password"
                 />
@@ -67,9 +67,9 @@ const submit = () => {
                 />
                 <BreezeInput
                     id="password_confirmation"
+                    v-model="form.password_confirmation"
                     type="password"
                     class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
                     required
                     autocomplete="new-password"
                 />

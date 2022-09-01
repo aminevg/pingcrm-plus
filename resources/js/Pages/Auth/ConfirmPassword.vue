@@ -31,9 +31,9 @@ const submit = () => {
                 <BreezeLabel for="password" value="Password" />
                 <BreezeInput
                     id="password"
+                    v-model="form.password"
                     type="password"
                     class="mt-1 block w-full"
-                    v-model="form.password"
                     required
                     autocomplete="current-password"
                     autofocus

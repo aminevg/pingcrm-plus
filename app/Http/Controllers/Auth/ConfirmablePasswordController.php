@@ -18,7 +18,7 @@ class ConfirmablePasswordController extends Controller
      */
     public function show()
     {
-        return Inertia::render('Auth/ConfirmPassword');
+        return Inertia::render("Auth/ConfirmPassword");
     }
 
     /**
@@ -29,16 +29,18 @@ class ConfirmablePasswordController extends Controller
      */
     public function store(Request $request)
     {
-        if (! Auth::guard('web')->validate([
-            'email' => $request->user()->email,
-            'password' => $request->password,
-        ])) {
+        if (
+            !Auth::guard("web")->validate([
+                "email" => $request->user()->email,
+                "password" => $request->password,
+            ])
+        ) {
             throw ValidationException::withMessages([
-                'password' => __('auth.password'),
+                "password" => __("auth.password"),
             ]);
         }
 
-        $request->session()->put('auth.password_confirmed_at', time());
+        $request->session()->put("auth.password_confirmed_at", time());
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
