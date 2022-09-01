@@ -1,19 +1,28 @@
-<script setup>
-import { onMounted, ref } from 'vue';
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
 
-defineProps(['modelValue']);
+defineProps(["modelValue"]);
 
-defineEmits(['update:modelValue']);
+const emit = defineEmits(["update:modelValue"]);
 
-const input = ref(null);
+const input = ref<HTMLInputElement | null>(null);
 
 onMounted(() => {
-    if (input.value.hasAttribute('autofocus')) {
+    if (input.value?.hasAttribute("autofocus")) {
         input.value.focus();
     }
 });
+
+function onInput(event: Event) {
+    emit("update:modelValue", (event.target as HTMLInputElement).value);
+}
 </script>
 
 <template>
-    <input class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" ref="input">
+    <input
+        class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+        :value="modelValue"
+        @input="onInput"
+        ref="input"
+    />
 </template>

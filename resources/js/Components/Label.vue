@@ -1,5 +1,5 @@
-<script setup>
-defineProps(['value']);
+<script setup lang="ts">
+defineProps(["value"]);
 </script>
 
 <template>
