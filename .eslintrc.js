@@ -11,6 +11,7 @@ module.exports = {
     ],
     rules: {
         "vue/no-setup-props-destructure": "off",
+        "vue/multi-word-component-names": "off",
     },
     globals: {
         route: true,
