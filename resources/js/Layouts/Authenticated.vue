@@ -82,7 +82,7 @@ const user = props.value.auth.user as User;
                                 <Link
                                     class="block px-6 py-2 w-full text-left hover:text-white hover:bg-indigo-500"
                                     href="/logout"
-                                    method="delete"
+                                    method="post"
                                     as="button"
                                 >
                                     Logout
