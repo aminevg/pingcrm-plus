@@ -1,184 +1,109 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import BreezeApplicationLogo from "@/Components/ApplicationLogo.vue";
-import BreezeDropdown from "@/Components/Dropdown.vue";
-import BreezeDropdownLink from "@/Components/DropdownLink.vue";
-import BreezeNavLink from "@/Components/NavLink.vue";
-import BreezeResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import { Link, usePage } from "@inertiajs/inertia-vue3";
 import { PropsInterface, User } from "@/global";
+import ApplicationLogo from "@/Components/ApplicationLogo.vue";
+import Dropdown from "@/Components/Dropdown.vue";
+import MainMenu from "@/Components/MainMenu.vue";
+import Icon from "@/Components/Icon.vue";
+import FlashMessages from "@/Components/FlashMessages.vue";
 
-const showingNavigationDropdown = ref(false);
 const { props } = usePage<PropsInterface>();
 const user = props.value.auth.user as User;
 </script>
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
-                <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
-                        <div class="flex">
-                            <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <BreezeApplicationLogo
-                                        class="block h-9 w-auto"
-                                    />
-                                </Link>
-                            </div>
-
-                            <!-- Navigation Links -->
-                            <div
-                                class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
-                            >
-                                <BreezeNavLink
-                                    :href="route('dashboard')"
-                                    :active="route().current('dashboard')"
-                                >
-                                    Dashboard
-                                </BreezeNavLink>
-                            </div>
-                        </div>
-
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <!-- Settings Dropdown -->
-                            <div class="ml-3 relative">
-                                <BreezeDropdown align="right" width="48">
-                                    <template #trigger>
-                                        <span class="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                            >
-                                                {{ user.name }}
-
-                                                <svg
-                                                    class="ml-2 -mr-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fill-rule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clip-rule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </template>
-
-                                    <template #content>
-                                        <BreezeDropdownLink
-                                            :href="route('logout')"
-                                            method="post"
-                                            as="button"
-                                        >
-                                            Log Out
-                                        </BreezeDropdownLink>
-                                    </template>
-                                </BreezeDropdown>
-                            </div>
-                        </div>
-
-                        <!-- Hamburger -->
-                        <div class="-mr-2 flex items-center sm:hidden">
-                            <button
-                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                                @click="
-                                    showingNavigationDropdown =
-                                        !showingNavigationDropdown
-                                "
-                            >
+        <div id="dropdown" />
+        <div class="md:flex md:flex-col">
+            <div class="md:flex md:flex-col md:h-screen">
+                <div class="md:flex md:flex-shrink-0">
+                    <div
+                        class="flex items-center justify-between px-6 py-4 bg-indigo-900 md:flex-shrink-0 md:justify-center md:w-56"
+                    >
+                        <Link class="mt-1" href="/">
+                            <ApplicationLogo
+                                class="fill-white"
+                                width="120"
+                                height="28"
+                            />
+                        </Link>
+                        <Dropdown
+                            class="md:hidden"
+                            content-class="mt-2 px-8 py-4 bg-indigo-800 rounded shadow-lg"
+                        >
+                            <template #trigger>
                                 <svg
-                                    class="h-6 w-6"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
+                                    class="w-6 h-6 fill-white cursor-pointer"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
                                 >
                                     <path
-                                        :class="{
-                                            hidden: showingNavigationDropdown,
-                                            'inline-flex':
-                                                !showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        :class="{
-                                            hidden: !showingNavigationDropdown,
-                                            'inline-flex':
-                                                showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
+                                        d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"
                                     />
                                 </svg>
-                            </button>
-                        </div>
+                            </template>
+                            <template #content>
+                                <MainMenu />
+                            </template>
+                        </Dropdown>
+                    </div>
+                    <div
+                        class="md:text-md flex items-center justify-end p-4 w-full text-sm bg-white border-b md:px-12 md:py-0"
+                    >
+                        <Dropdown>
+                            <template #trigger>
+                                <div
+                                    class="group flex items-center cursor-pointer select-none"
+                                >
+                                    <div
+                                        class="mr-1 text-slate-700 group-hover:text-indigo-600 focus:text-indigo-600 whitespace-nowrap"
+                                    >
+                                        <span>{{ user.name }}</span>
+                                    </div>
+                                    <Icon
+                                        class="w-5 h-5 fill-slate-700 group-hover:fill-indigo-600 focus:fill-indigo-600"
+                                        name="cheveron-down"
+                                    />
+                                </div>
+                            </template>
+                            <template #content>
+                                <Link
+                                    class="block px-6 py-2 hover:text-white hover:bg-indigo-500"
+                                    :href="`/users/${user.id}/edit`"
+                                >
+                                    My Profile
+                                </Link>
+                                <Link
+                                    class="block px-6 py-2 hover:text-white hover:bg-indigo-500"
+                                    href="/users"
+                                >
+                                    Manage Users
+                                </Link>
+                                <Link
+                                    class="block px-6 py-2 w-full text-left hover:text-white hover:bg-indigo-500"
+                                    href="/logout"
+                                    method="delete"
+                                    as="button"
+                                >
+                                    Logout
+                                </Link>
+                            </template>
+                        </Dropdown>
                     </div>
                 </div>
-
-                <!-- Responsive Navigation Menu -->
-                <div
-                    :class="{
-                        block: showingNavigationDropdown,
-                        hidden: !showingNavigationDropdown,
-                    }"
-                    class="sm:hidden"
-                >
-                    <div class="pt-2 pb-3 space-y-1">
-                        <BreezeResponsiveNavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')"
-                        >
-                            Dashboard
-                        </BreezeResponsiveNavLink>
-                    </div>
-
-                    <!-- Responsive Settings Options -->
-                    <div class="pt-4 pb-1 border-t border-gray-200">
-                        <div class="px-4">
-                            <div class="font-medium text-base text-gray-800">
-                                {{ user.name }}
-                            </div>
-                            <div class="font-medium text-sm text-gray-500">
-                                {{ user.email }}
-                            </div>
-                        </div>
-
-                        <div class="mt-3 space-y-1">
-                            <BreezeResponsiveNavLink
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                            >
-                                Log Out
-                            </BreezeResponsiveNavLink>
-                        </div>
+                <div class="md:flex md:flex-grow md:overflow-hidden">
+                    <MainMenu
+                        class="hidden flex-shrink-0 p-12 w-56 bg-indigo-800 overflow-y-auto md:block"
+                    />
+                    <div
+                        class="px-4 py-8 md:flex-1 md:p-12 md:overflow-y-auto"
+                        scroll-region
+                    >
+                        <FlashMessages />
+                        <slot />
                     </div>
                 </div>
-            </nav>
-
-            <!-- Page Heading -->
-            <header v-if="$slots.header" class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header>
-
-            <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
+            </div>
         </div>
     </div>
 </template>

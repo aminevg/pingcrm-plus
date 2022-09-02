@@ -4,11 +4,11 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 const {
     align = "right",
     width = "48",
-    contentClasses = ["py-1", "bg-white"],
+    contentClass = "py-1 bg-white",
 } = defineProps<{
     align?: string;
     width?: string;
-    contentClasses?: string[];
+    contentClass?: string;
 }>();
 
 const closeOnEscape = (e: KeyboardEvent) => {
@@ -48,7 +48,7 @@ const open = ref(false);
         <!-- Full Screen Dropdown Overlay -->
         <div
             v-show="open"
-            class="fixed inset-0 z-40"
+            class="fixed inset-0 z-40 bg-black opacity-20"
             @click="open = false"
         ></div>
 
@@ -69,7 +69,7 @@ const open = ref(false);
             >
                 <div
                     class="rounded-md ring-1 ring-black ring-opacity-5"
-                    :class="contentClasses"
+                    :class="contentClass"
                 >
                     <slot name="content" />
                 </div>

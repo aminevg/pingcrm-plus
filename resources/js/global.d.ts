@@ -19,4 +19,9 @@ interface PropsInterface {
     auth: {
         user?: User;
     };
+    flash?: {
+        success: string | null;
+        error: string | null;
+    };
+    errors?: Record<string, string>;
 }
