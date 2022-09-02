@@ -34,7 +34,7 @@ const submit = () => {
             <div class="px-10 py-12">
                 <h1 class="text-center text-3xl font-bold">Welcome Back!</h1>
                 <div class="mt-6 mx-auto w-24 border-b-2" />
-                <text-input
+                <TextInput
                     v-model="form.email"
                     :error="form.errors.email"
                     class="mt-10"
@@ -43,7 +43,7 @@ const submit = () => {
                     autofocus
                     autocapitalize="off"
                 />
-                <text-input
+                <TextInput
                     v-model="form.password"
                     :error="form.errors.password"
                     class="mt-6"
@@ -64,13 +64,13 @@ const submit = () => {
                 </label>
             </div>
             <div class="flex px-10 py-4 bg-slate-100 border-t border-slate-100">
-                <loading-button
+                <LoadingButton
                     :loading="form.processing"
                     class="px-6 py-3 rounded bg-indigo-600 text-white text-sm leading-4 font-bold whitespace-nowrap hover:bg-orange-400 focus:bg-orange-400 ml-auto"
                     type="submit"
                 >
                     Login
-                </loading-button>
+                </LoadingButton>
             </div>
         </form>
     </GuestLayout>
