@@ -3,13 +3,28 @@ import AuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import SearchFilter from "@/Components/SearchFilter.vue";
 import Icon from "@/Components/Icon.vue";
+import { User } from "@/global";
+import { watch } from "vue";
+import { pickBy, throttle } from "lodash-es";
 
 const { filters } = defineProps<{
     filters: { search: string | null; trashed: string | null };
-    users: Record<string, string>[];
+    users: User[];
 }>();
 
 const form = useForm(filters);
+
+watch(
+    form,
+    throttle(
+        () =>
+            form.transform(pickBy).get(route("users.index"), {
+                preserveState: true,
+                only: ["users"],
+            }),
+        150
+    )
+);
 </script>
 
 <template>
@@ -17,11 +32,13 @@ const form = useForm(filters);
         <Head title="Users" />
         <h1 class="mb-8 text-3xl font-bold">Users</h1>
 
-        <div class="flex justify-between mb-6 gap-y-2">
+        <div class="flex flex-col xl:justify-between xl:flex-row mb-6 gap-y-2">
             <SearchFilter v-model="form" @reset="form.reset()" />
-            <Link class="btn btn-primary" href="/users/create">
-                <span>Create</span>
-                <span class="hidden xl:inline">&nbsp;User</span>
+            <Link
+                class="btn btn-primary max-w-max xl:max-w-none"
+                :href="route('users.create')"
+            >
+                Create user
             </Link>
         </div>
 
@@ -37,7 +54,7 @@ const form = useForm(filters);
                     <tr v-for="user in users" :key="user.id" class="hover">
                         <td class="p-0">
                             <Link
-                                :href="`/users/${user.id}/edit`"
+                                :href="route('users.edit', user.id)"
                                 class="block p-4"
                             >
                                 <img
@@ -55,7 +72,7 @@ const form = useForm(filters);
                         </td>
                         <td class="p-0">
                             <Link
-                                :href="`/users/${user.id}/edit`"
+                                :href="route('users.edit', user.id)"
                                 tabindex="-1"
                                 class="block p-4"
                             >
@@ -64,7 +81,7 @@ const form = useForm(filters);
                         </td>
                         <td class="w-px p-0">
                             <Link
-                                :href="`/users/${user.id}/edit`"
+                                :href="route('users.edit', user.id)"
                                 tabindex="-1"
                                 class="block p-4"
                             >
