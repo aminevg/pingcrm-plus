@@ -13,7 +13,10 @@ declare module "@vue/runtime-core" {
 export type User = {
     id: number;
     name: string;
+    first_name: string;
+    last_name: string;
     email: string;
+    deleted_at: string;
 };
 interface PropsInterface {
     auth: {
