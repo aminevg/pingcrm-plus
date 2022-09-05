@@ -12,11 +12,11 @@ import { Head } from "@inertiajs/inertia-vue3";
             Hey there! Welcome to Ping CRM, a demo app designed to help
             illustrate how
             <a
-                class="text-indigo-500 hover:text-orange-600 underline"
+                class="link link-primary"
                 href="https://inertiajs.com"
+                target="_blank"
+                >Inertia.js</a
             >
-                Inertia.js
-            </a>
             works.
         </p>
     </AuthenticatedLayout>

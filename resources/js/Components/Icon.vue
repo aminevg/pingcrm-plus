@@ -31,7 +31,7 @@ defineProps<{ name: string }>();
         />
     </svg>
     <svg
-        v-else-if="name === 'office'"
+        v-else-if="name === 'organizations'"
         xmlns="http://www.w3.org/2000/svg"
         width="100"
         height="100"
@@ -43,7 +43,7 @@ defineProps<{ name: string }>();
         />
     </svg>
     <svg
-        v-else-if="name === 'printer'"
+        v-else-if="name === 'reports'"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
     >
@@ -61,7 +61,7 @@ defineProps<{ name: string }>();
         />
     </svg>
     <svg
-        v-else-if="name === 'users'"
+        v-else-if="name === 'contacts'"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
     >

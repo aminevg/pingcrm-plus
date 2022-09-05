@@ -26,47 +26,44 @@ const submit = () => {
     <GuestLayout>
         <Head title="Login" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="mb-4 font-medium text-sm text-success">
             {{ status }}
         </div>
 
         <form @submit.prevent="submit">
-            <div class="px-10 py-12">
+            <div class="px-10 pt-12 pb-5">
                 <h1 class="text-center text-3xl font-bold">Welcome Back!</h1>
-                <div class="mt-6 mx-auto w-24 border-b-2" />
-                <TextInput
-                    v-model="form.email"
-                    :error="form.errors.email"
-                    class="mt-10"
-                    label="Email"
-                    type="email"
-                    autofocus
-                    autocapitalize="off"
-                />
-                <TextInput
-                    v-model="form.password"
-                    :error="form.errors.password"
-                    class="mt-6"
-                    label="Password"
-                    type="password"
-                />
-                <label
-                    class="flex items-center mt-6 select-none"
-                    for="remember"
-                >
-                    <input
-                        id="remember"
-                        v-model="form.remember"
-                        class="mr-1"
-                        type="checkbox"
+                <div class="divider" />
+                <div class="form-control gap-y-2">
+                    <TextInput
+                        v-model="form.email"
+                        :error="form.errors.email"
+                        label="Email"
+                        type="email"
+                        autofocus
+                        autocapitalize="off"
                     />
-                    <span class="text-sm">Remember Me</span>
-                </label>
+                    <TextInput
+                        v-model="form.password"
+                        :error="form.errors.password"
+                        label="Password"
+                        type="password"
+                    />
+                    <label class="label cursor-pointer">
+                        <span class="label-text">Remember Me</span>
+                        <input
+                            id="remember"
+                            v-model="form.remember"
+                            type="checkbox"
+                            class="checkbox"
+                        />
+                    </label>
+                </div>
             </div>
-            <div class="flex px-10 py-4 bg-slate-100 border-t border-slate-100">
+            <div class="flex px-10 py-4 bg-base-200">
                 <LoadingButton
                     :loading="form.processing"
-                    class="px-6 py-3 rounded bg-indigo-600 text-white text-sm leading-4 font-bold whitespace-nowrap hover:bg-orange-400 focus:bg-orange-400 ml-auto"
+                    class="btn-primary ml-auto px-6"
                     type="submit"
                 >
                     Login

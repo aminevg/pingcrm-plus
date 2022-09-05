@@ -4,7 +4,7 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 const {
     align = "right",
     width = "48",
-    contentClass = "py-1 bg-white",
+    contentClass = "bg-base-100",
 } = defineProps<{
     align?: string;
     width?: string;
@@ -48,7 +48,7 @@ const open = ref(false);
         <!-- Full Screen Dropdown Overlay -->
         <div
             v-show="open"
-            class="fixed inset-0 z-40 bg-black opacity-20"
+            class="fixed inset-0 z-40 bg-neutral opacity-50"
             @click="open = false"
         ></div>
 
@@ -67,10 +67,7 @@ const open = ref(false);
                 style="display: none"
                 @click="open = false"
             >
-                <div
-                    class="rounded-md ring-1 ring-black ring-opacity-5"
-                    :class="contentClass"
-                >
+                <div :class="contentClass">
                     <slot name="content" />
                 </div>
             </div>
