@@ -6,7 +6,9 @@ const { id = uniqueId("text-input-"), type = "text" } = defineProps<{
     label?: string;
     error?: string;
     type?: string;
-    modelValue: string;
+    placeholder?: string;
+    contentClass?: string;
+    modelValue: string | null;
 }>();
 
 const emit = defineEmits(["update:modelValue"]);
@@ -24,9 +26,10 @@ function onInput(event: Event) {
         :id="id"
         ref="input"
         class="input input-bordered"
-        :class="{ 'input-error': error }"
+        :class="[{ 'input-error': error }, contentClass]"
         :type="type"
         :value="modelValue"
+        :placeholder="placeholder"
         @input="onInput"
     />
     <label v-if="error" class="label">
