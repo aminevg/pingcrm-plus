@@ -31,7 +31,10 @@ const user = props.value.auth.user as User;
                         <MainMenu class="bg-primary-focus shadow rounded-box" />
                     </template>
                 </Dropdown>
-                <Link href="/" class="btn btn-ghost hidden lg:flex">
+                <Link
+                    href="/"
+                    class="btn btn-ghost hidden lg:flex no-animation"
+                >
                     <ApplicationLogo
                         class="fill-primary-content"
                         width="140"

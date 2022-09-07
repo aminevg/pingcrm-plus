@@ -14,7 +14,7 @@ const active = relativeUrl ? currentUrl.startsWith(relativeUrl) : false;
     <li>
         <Link
             :class="{ active }"
-            class="group shadow rounded-full focus:border-base-content focus:border focus:border-opacity-10 hover:bg-primary hover:text-primary-content"
+            class="group shadow rounded-full focus:border-opacity-10 hover:bg-primary hover:text-primary-content"
             :href="relativeUrl"
         >
             <Icon

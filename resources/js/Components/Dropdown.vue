@@ -22,7 +22,7 @@ onUnmounted(() => document.removeEventListener("keydown", closeOnEscape));
 
 <template>
     <div class="dropdown">
-        <label ref="dropdown" tabindex="0" class="btn btn-ghost">
+        <label ref="dropdown" tabindex="0" class="btn btn-ghost no-animation">
             <slot name="trigger" />
         </label>
 
