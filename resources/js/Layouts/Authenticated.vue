@@ -13,7 +13,7 @@ const user = props.value.auth.user as User;
 
 <template>
     <div>
-        <div class="navbar w-full bg-primary-focus text-primary-content">
+        <div class="navbar bg-primary-focus text-primary-content">
             <div class="navbar-start">
                 <Dropdown class="lg:hidden" content-class="mt-3">
                     <template #trigger>
