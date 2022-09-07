@@ -20,7 +20,7 @@ const formProxy = computed({
 </script>
 
 <template>
-    <div class="flex gap-x-2 max-w-xs md:max-w-none">
+    <div class="flex flex-col md:flex-row gap-x-2 gap-y-5">
         <TextInput v-model="formProxy.search" placeholder="Search…" />
         <select v-model="formProxy.trashed" class="select select-bordered">
             <option :value="null">No trashed users</option>
@@ -28,7 +28,7 @@ const formProxy = computed({
             <option value="only">Only trashed users</option>
         </select>
         <button
-            class="btn btn-sm self-center btn-ghost"
+            class="btn btn-sm self-end md:self-center btn-ghost"
             type="button"
             @click="$emit('reset')"
         >

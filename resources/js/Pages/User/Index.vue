@@ -14,6 +14,11 @@ const { filters } = defineProps<{
 
 const form = useForm(filters);
 
+function resetSearch() {
+    form.search = null;
+    form.trashed = null;
+}
+
 watch(
     form,
     throttle(
@@ -32,8 +37,8 @@ watch(
         <Head title="Users" />
         <h1 class="mb-8 text-3xl font-bold">Users</h1>
 
-        <div class="flex flex-col xl:justify-between xl:flex-row mb-6 gap-y-2">
-            <SearchFilter v-model="form" @reset="form.reset()" />
+        <div class="flex flex-col md:justify-between md:flex-row mb-6 gap-y-2">
+            <SearchFilter v-model="form" @reset="resetSearch" />
             <Link
                 class="btn btn-primary max-w-max xl:max-w-none"
                 :href="route('users.create')"
@@ -46,12 +51,14 @@ watch(
             <table class="table w-full">
                 <thead>
                     <tr>
+                        <th />
                         <th>Name</th>
                         <th colspan="2">Email</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="user in users" :key="user.id" class="hover">
+                        <td />
                         <td class="p-0">
                             <Link
                                 :href="route('users.edit', user.id)"
