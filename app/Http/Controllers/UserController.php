@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -43,7 +45,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            "first_name" => ["required", "max:25"],
+            "last_name" => ["required", "max:25"],
+            "email" => ["required", "max:50", "email", Rule::unique("users")],
+            "password" => ["required", "max:255"],
+        ]);
+        User::create($validated);
+        return Redirect::route("users.index")->with("success", "User created!");
     }
 
     /**

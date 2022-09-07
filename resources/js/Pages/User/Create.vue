@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import AuthenticatedLayout from "@/Layouts/Authenticated.vue";
+import { FormKitNode } from "@formkit/core";
+import { computed } from "vue";
 
 const form = useForm<{
     first_name: string | null;
@@ -9,9 +11,19 @@ const form = useForm<{
     password: string | null;
 }>({ first_name: null, last_name: null, email: null, password: null });
 
-function store() {
-    console.log(form);
-}
+const submitAttrs = computed(() => ({
+    inputClass: form.processing ? "loading" : "",
+}));
+
+const submit = (_data: typeof form, node?: FormKitNode) =>
+    new Promise<void>((resolve) => {
+        form.post(route("users.store"), {
+            onFinish: () => {
+                node?.setErrors([], form.errors);
+                resolve();
+            },
+        });
+    });
 </script>
 
 <template>
@@ -31,9 +43,10 @@ function store() {
                 v-model="form"
                 type="form"
                 submit-label="Create user"
+                :submit-attrs="submitAttrs"
                 messages-class="px-5 pt-0 mb-2"
                 message-class="text-sm"
-                @submit="store"
+                @submit="submit"
             >
                 <div class="flex flex-col lg:flex-row gap-x-20 px-10 pt-5">
                     <FormKit
