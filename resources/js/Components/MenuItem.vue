@@ -12,11 +12,19 @@ const active = relativeUrl ? currentUrl.startsWith(relativeUrl) : false;
 
 <template>
     <li>
-        <Link :class="{ active }" :href="relativeUrl">
+        <Link
+            :class="{ active }"
+            class="shadow rounded-full focus:border-base-content focus:border focus:border-opacity-10 group hover:bg-primary hover:text-primary-content"
+            :href="relativeUrl"
+        >
             <Icon
                 :name="name"
                 class="w-4 h-4"
-                :class="active ? 'fill-primary-content' : 'fill-base-content'"
+                :class="
+                    active
+                        ? 'fill-primary-content'
+                        : 'fill-base-content group-hover:fill-primary-content'
+                "
             />
             {{ label }}
         </Link>
