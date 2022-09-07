@@ -51,7 +51,9 @@ export const formTheme = defaultConfig({
                 input: "range",
             },
             search: textClassification,
-            select: textClassification,
+            select: {
+                input: "select select-bordered max-w-md formkit-invalid:select-error",
+            },
             submit: {
                 input: "btn btn-primary",
                 outer: "flex items-center justify-end px-8 py-4 bg-base-300 mb-0",

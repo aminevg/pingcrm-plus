@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { InertiaForm } from "@inertiajs/inertia-vue3";
 import { computed } from "vue";
-import TextInput from "./TextInput.vue";
 
 const { modelValue } = defineProps<{
     modelValue: InertiaForm<{ search: string | null; trashed: string | null }>;
@@ -20,15 +19,21 @@ const formProxy = computed({
 </script>
 
 <template>
-    <div class="flex flex-col md:flex-row gap-x-2 gap-y-5">
-        <TextInput v-model="formProxy.search" placeholder="Search…" />
-        <select v-model="formProxy.trashed" class="select select-bordered">
-            <option :value="null">No trashed users</option>
-            <option value="with">With trashed users</option>
-            <option value="only">Only trashed users</option>
-        </select>
+    <div class="flex flex-col md:flex-row gap-x-2">
+        <FormKit v-model="formProxy" type="group">
+            <FormKit name="search" type="text" placeholder="Search..." />
+            <FormKit
+                name="trashed"
+                type="select"
+                :options="{
+                    null: 'No trashed users',
+                    with: 'WIth trashed users',
+                    only: 'Only trashed users',
+                }"
+            />
+        </FormKit>
         <button
-            class="btn btn-sm self-end md:self-center btn-ghost"
+            class="btn btn-sm self-end md:self-start md:mt-2 btn-ghost"
             type="button"
             @click="$emit('reset')"
         >
