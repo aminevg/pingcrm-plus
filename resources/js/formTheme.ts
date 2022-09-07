@@ -17,11 +17,11 @@ export const formTheme = defaultConfig({
     config: {
         classes: generateClasses({
             global: {
-                outer: "formkit-disabled:opacity-40 mb-5",
+                outer: "formkit-disabled:opacity-70 mb-5",
                 inner: "form-control",
                 label: "label label-text font-bold",
                 help: "mt-1 text-xs",
-                messages: "label",
+                messages: "label flex-col items-start",
                 message: "label-text-alt text-error",
             },
             button: {

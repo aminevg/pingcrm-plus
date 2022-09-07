@@ -31,7 +31,7 @@ function store() {
                 v-model="form"
                 type="form"
                 submit-label="Create user"
-                messages-class="px-10 pt-0 mb-2"
+                messages-class="px-5 pt-0 mb-2"
                 message-class="text-sm"
                 @submit="store"
             >

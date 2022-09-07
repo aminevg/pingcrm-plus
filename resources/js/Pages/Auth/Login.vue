@@ -1,13 +1,8 @@
 <script setup lang="ts">
 import GuestLayout from "@/Layouts/Guest.vue";
-import TextInput from "@/Components/TextInput.vue";
-import LoadingButton from "@/Components/LoadingButton.vue";
+import { FormKitNode } from "@formkit/core";
 import { Head, useForm } from "@inertiajs/inertia-vue3";
-
-defineProps<{
-    canResetPassword: boolean;
-    status: string | null;
-}>();
+import { computed } from "vue";
 
 const form = useForm({
     email: "",
@@ -15,10 +10,21 @@ const form = useForm({
     remember: false,
 });
 
-const submit = () => {
-    form.post(route("login"), {
-        onFinish: () => form.reset("password"),
-    });
+const submitAttrs = computed(() => ({
+    inputClass: form.processing ? "loading" : "",
+}));
+
+const submit = (data: typeof form, node?: FormKitNode) => {
+    form.clearErrors();
+    return new Promise<void>((resolve) =>
+        form.post(route("login"), {
+            onSuccess: () => form.reset("password"),
+            onFinish: () => {
+                node?.setErrors([], form.errors);
+                resolve();
+            },
+        })
+    );
 };
 </script>
 
@@ -26,49 +32,34 @@ const submit = () => {
     <GuestLayout>
         <Head title="Login" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-success">
-            {{ status }}
-        </div>
-
-        <form @submit.prevent="submit">
+        <FormKit
+            id="login-form"
+            v-model="form"
+            type="form"
+            submit-label="Login"
+            :submit-attrs="submitAttrs"
+            messages-class="px-5 pt-0 mb-2"
+            message-class="text-sm"
+            @submit="submit"
+        >
             <div class="px-10 pt-12 pb-5">
-                <h1 class="text-center text-3xl font-bold">Welcome Back!</h1>
+                <h1 class="text-center text-3xl font-bold">Welcome back!</h1>
                 <div class="divider" />
-                <div class="form-control gap-y-2">
-                    <TextInput
-                        v-model="form.email"
-                        :error="form.errors.email"
-                        label="Email"
-                        type="email"
-                        autofocus
-                        autocapitalize="off"
-                    />
-                    <TextInput
-                        v-model="form.password"
-                        :error="form.errors.password"
-                        label="Password"
-                        type="password"
-                    />
-                    <label class="label cursor-pointer">
-                        <span class="label-text">Remember Me</span>
-                        <input
-                            id="remember"
-                            v-model="form.remember"
-                            type="checkbox"
-                            class="checkbox"
-                        />
-                    </label>
-                </div>
+                <FormKit
+                    name="email"
+                    label="Email"
+                    type="email"
+                    validation="required|email"
+                    autofocus
+                    autocapitalize="off"
+                />
+                <FormKit
+                    name="password"
+                    label="Password"
+                    type="password"
+                    validation="required"
+                />
             </div>
-            <div class="flex px-10 py-4 bg-base-200">
-                <LoadingButton
-                    :loading="form.processing"
-                    class="btn-primary ml-auto px-6"
-                    type="submit"
-                >
-                    Login
-                </LoadingButton>
-            </div>
-        </form>
+        </FormKit>
     </GuestLayout>
 </template>
