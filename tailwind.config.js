@@ -7,6 +7,7 @@ module.exports = {
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./resources/js/**/*.vue",
+        "./resources/js/formTheme.ts",
     ],
 
     theme: {
@@ -20,5 +21,6 @@ module.exports = {
     plugins: [
         // require("@tailwindcss/forms"),
         require("daisyui"),
+        require("@formkit/themes/tailwindcss"),
     ],
 };
