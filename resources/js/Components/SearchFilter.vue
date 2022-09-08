@@ -25,11 +25,11 @@ const formProxy = computed({
             <FormKit
                 name="trashed"
                 type="select"
-                :options="{
-                    null: 'No trashed users',
-                    with: 'WIth trashed users',
-                    only: 'Only trashed users',
-                }"
+                :options="[
+                    { label: 'No trashed users', value: null },
+                    { label: 'With trashed users', value: 'with' },
+                    { label: 'Only trashed users', value: 'only' },
+                ]"
             />
         </FormKit>
         <button
