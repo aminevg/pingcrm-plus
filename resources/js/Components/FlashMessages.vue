@@ -83,7 +83,7 @@ const errorsLength = computed(() => (errors ? Object.keys(errors).length : 0));
                 <span v-else>
                     There
                     {{ errorsLength === 1 ? "is one" : `are ${errorsLength}` }}
-                    form errors.
+                    form {{ errorsLength === 1 ? "error" : "errors" }}.
                 </span>
             </div>
             <button

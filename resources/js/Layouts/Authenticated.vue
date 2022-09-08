@@ -4,7 +4,6 @@ import { PropsInterface, User } from "@/global";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import MainMenu from "@/Components/MainMenu.vue";
-import Icon from "@/Components/Icon.vue";
 import FlashMessages from "@/Components/FlashMessages.vue";
 
 const { props } = usePage<PropsInterface>();
@@ -58,16 +57,35 @@ const user = props.value.auth.user as User;
                     content-class="bg-primary-focus mt-3"
                 >
                     <template #trigger>
-                        <div
-                            class="group flex items-center cursor-pointer select-none"
-                        >
-                            <div class="mr-1 whitespace-nowrap">
-                                <span>{{ user.name }}</span>
+                        <div class="flex items-center gap-x-2">
+                            <div class="avatar">
+                                <div class="mask mask-circle w-8 h-8">
+                                    <img v-if="user.photo" :src="user.photo" />
+                                    <svg
+                                        v-else
+                                        width="32px"
+                                        height="32px"
+                                        stroke-width="1.5"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="bg-base-300"
+                                    >
+                                        <path
+                                            d="M5 20v-1a7 7 0 017-7v0a7 7
+                                            0 017 7v1M12 12a4 4 0 100-8 4 4 0
+                                            000 8z"
+                                            class="stroke-base-content"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                </div>
                             </div>
-                            <Icon
-                                class="w-5 h-5 fill-primary-content"
-                                name="cheveron-down"
-                            />
+                            <span class="hidden md:inline">
+                                {{ user.name }}
+                            </span>
                         </div>
                     </template>
                     <template #content>

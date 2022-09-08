@@ -49,6 +49,11 @@ watch(
 
         <div class="overflow-x-auto">
             <table class="table w-full">
+                <colgroup>
+                    <col class="w-px" />
+                    <col class="w-1/2" />
+                    <col class="w-1/2" span="2" />
+                </colgroup>
                 <thead>
                     <tr>
                         <th />
@@ -58,18 +63,41 @@ watch(
                 </thead>
                 <tbody>
                     <tr v-for="user in users" :key="user.id" class="hover">
-                        <td />
+                        <td class="p-0" />
                         <td class="p-0">
                             <Link
                                 :href="route('users.edit', user.id)"
-                                class="block p-4"
+                                class="p-4 flex items-center gap-x-3"
                             >
-                                <img
-                                    v-if="user.photo"
-                                    class="block -my-2 mr-2 w-5 h-5 rounded-full"
-                                    :src="user.photo"
-                                />
-                                {{ user.name }}
+                                <div class="avatar">
+                                    <div class="mask mask-circle w-12 h-12">
+                                        <img
+                                            v-if="user.photo"
+                                            :src="user.photo"
+                                        />
+                                        <svg
+                                            v-else
+                                            width="48px"
+                                            height="48px"
+                                            stroke-width="1.5"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="bg-base-300"
+                                        >
+                                            <path
+                                                d="M5 20v-1a7 7 0 017-7v0a7 7
+                                            0 017 7v1M12 12a4 4 0 100-8 4 4 0
+                                            000 8z"
+                                                class="stroke-base-content"
+                                                stroke-width="1.5"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <span>{{ user.name }}</span>
                                 <Icon
                                     v-if="user.deleted_at"
                                     name="trash"
@@ -86,7 +114,7 @@ watch(
                                 {{ user.email }}
                             </Link>
                         </td>
-                        <td class="w-px p-0">
+                        <td class="p-0">
                             <Link
                                 :href="route('users.edit', user.id)"
                                 tabindex="-1"

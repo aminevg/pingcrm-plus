@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,11 @@ Route::get("/", function () {
         "phpVersion" => PHP_VERSION,
     ]);
 });
+
+Route::get("/img/{path}", [ImageController::class, "show"])
+    ->where("path", ".*")
+    ->middleware(["auth", "verified"])
+    ->name("image");
 
 Route::get("/dashboard", function () {
     return Inertia::render("Dashboard");

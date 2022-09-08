@@ -22,8 +22,23 @@ class UserController extends Controller
             "filters" => $filters,
             "users" => User::orderByName()
                 ->filter($filters)
-                ->get(["id", "first_name", "last_name", "email", "deleted_at"])
-                ->append("name"),
+                ->get()
+                ->transform(
+                    fn(User $user) => [
+                        "id" => $user->id,
+                        "name" => $user->name,
+                        "email" => $user->email,
+                        "deleted_at" => $user->deleted_at,
+                        "photo" => $user->photo_path
+                            ? route("image", [
+                                "path" => $user->photo_path,
+                                "w" => 48,
+                                "h" => 48,
+                                "fit" => "crop",
+                            ])
+                            : null,
+                    ]
+                ),
         ]);
     }
 
@@ -50,8 +65,17 @@ class UserController extends Controller
             "last_name" => ["required", "max:25"],
             "email" => ["required", "max:50", "email", Rule::unique("users")],
             "password" => ["required", "max:255"],
+            "photo" => ["nullable", "image"],
         ]);
-        User::create($validated);
+        User::create([
+            "first_name" => $validated["first_name"],
+            "last_name" => $validated["last_name"],
+            "email" => $validated["email"],
+            "password" => $validated["password"],
+            "photo_path" => $validated["photo"]
+                ? $validated["photo"]->store("users")
+                : null,
+        ]);
         return Redirect::route("users.index")->with("success", "User created!");
     }
 

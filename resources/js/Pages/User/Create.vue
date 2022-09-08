@@ -9,7 +9,14 @@ const form = useForm<{
     last_name: string | null;
     email: string | null;
     password: string | null;
-}>({ first_name: null, last_name: null, email: null, password: null });
+    photo: { file: File; name: string }[] | null;
+}>({
+    first_name: null,
+    last_name: null,
+    email: null,
+    password: null,
+    photo: null,
+});
 
 const submitAttrs = computed(() => ({
     inputClass: form.processing ? "loading" : "",
@@ -17,7 +24,11 @@ const submitAttrs = computed(() => ({
 
 const submit = (_data: typeof form, node?: FormKitNode) =>
     new Promise<void>((resolve) => {
-        form.post(route("users.store"), {
+        form.transform((data) => ({
+            ...data,
+            photo:
+                data.photo && data.photo.length > 0 ? data.photo[0].file : null,
+        })).post(route("users.store"), {
             onFinish: () => {
                 node?.setErrors([], form.errors);
                 resolve();
@@ -48,36 +59,45 @@ const submit = (_data: typeof form, node?: FormKitNode) =>
                 message-class="text-sm"
                 @submit="submit"
             >
-                <div class="flex flex-col lg:flex-row gap-x-20 px-10 pt-5">
+                <div class="px-10 flex flex-col gap-y-3 pt-5">
+                    <div class="flex flex-col lg:flex-row gap-x-20">
+                        <FormKit
+                            name="first_name"
+                            type="text"
+                            label="First name"
+                            outer-class="lg:w-1/2"
+                            validation="required|length:1,25"
+                        />
+                        <FormKit
+                            name="last_name"
+                            type="text"
+                            label="Last name"
+                            outer-class="lg:w-1/2"
+                            validation="required|length:1,25"
+                        />
+                    </div>
+                    <div class="flex flex-col lg:flex-row gap-x-20">
+                        <FormKit
+                            name="email"
+                            type="email"
+                            label="Email"
+                            outer-class="lg:w-1/2"
+                            validation="required|email|length:1,50"
+                        />
+                        <FormKit
+                            name="password"
+                            type="password"
+                            label="Password"
+                            outer-class="lg:w-1/2"
+                            validation="required"
+                        />
+                    </div>
                     <FormKit
-                        name="first_name"
-                        type="text"
-                        label="First name"
-                        outer-class="lg:w-1/2"
-                        validation="required|length:1,25"
-                    />
-                    <FormKit
-                        name="last_name"
-                        type="text"
-                        label="Last name"
-                        outer-class="lg:w-1/2"
-                        validation="required|length:1,25"
-                    />
-                </div>
-                <div class="flex flex-col lg:flex-row gap-x-20 px-10 pb-5">
-                    <FormKit
-                        name="email"
-                        type="email"
-                        label="Email"
-                        outer-class="lg:w-1/2"
-                        validation="required|email|length:1,50"
-                    />
-                    <FormKit
-                        name="password"
-                        type="password"
-                        label="Password"
-                        outer-class="lg:w-1/2"
-                        validation="required"
+                        name="photo"
+                        type="file"
+                        label="Photo"
+                        input-class="file:btn-primary"
+                        accept="image/*"
                     />
                 </div>
             </FormKit>
