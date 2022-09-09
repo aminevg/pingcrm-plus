@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import AuthenticatedLayout from "@/Layouts/Authenticated.vue";
-import { FormKitNode } from "@formkit/core";
+import { FormKitNode, FormKitSchemaNode } from "@formkit/core";
 import { computed } from "vue";
 
 const form = useForm<{
@@ -21,6 +21,62 @@ const form = useForm<{
 const submitAttrs = computed(() => ({
     inputClass: form.processing ? "loading" : "",
 }));
+
+const formSchema: FormKitSchemaNode[] = [
+    {
+        $el: "div",
+        attrs: { class: "px-10 flex flex-col gap-y-3 pt-5" },
+        children: [
+            {
+                $el: "div",
+                attrs: { class: "flex flex-col lg:flex-row gap-x-20" },
+                children: [
+                    {
+                        $formkit: "text",
+                        name: "first_name",
+                        label: "First Name",
+                        outerClass: "lg:w-1/2",
+                        validation: "required|length:1,25",
+                    },
+                    {
+                        $formkit: "text",
+                        name: "last_name",
+                        label: "Last Name",
+                        outerClass: "lg:w-1/2",
+                        validation: "required|length:1,25",
+                    },
+                ],
+            },
+            {
+                $el: "div",
+                attrs: { class: "flex flex-col lg:flex-row gap-x-20" },
+                children: [
+                    {
+                        $formkit: "email",
+                        name: "email",
+                        label: "Email",
+                        outerClass: "lg:w-1/2",
+                        validation: "required|email|length:1,50",
+                    },
+                    {
+                        $formkit: "password",
+                        name: "password",
+                        label: "Password",
+                        outerClass: "lg:w-1/2",
+                        validation: "required",
+                    },
+                ],
+            },
+            {
+                $formkit: "file",
+                name: "photo",
+                label: "Photo",
+                inputClass: "file:btn-primary",
+                accept: "image/*",
+            },
+        ],
+    },
+];
 
 const submit = (_data: typeof form, node?: FormKitNode) =>
     new Promise<void>((resolve) => {
@@ -59,47 +115,7 @@ const submit = (_data: typeof form, node?: FormKitNode) =>
                 message-class="text-sm"
                 @submit="submit"
             >
-                <div class="px-10 flex flex-col gap-y-3 pt-5">
-                    <div class="flex flex-col lg:flex-row gap-x-20">
-                        <FormKit
-                            name="first_name"
-                            type="text"
-                            label="First name"
-                            outer-class="lg:w-1/2"
-                            validation="required|length:1,25"
-                        />
-                        <FormKit
-                            name="last_name"
-                            type="text"
-                            label="Last name"
-                            outer-class="lg:w-1/2"
-                            validation="required|length:1,25"
-                        />
-                    </div>
-                    <div class="flex flex-col lg:flex-row gap-x-20">
-                        <FormKit
-                            name="email"
-                            type="email"
-                            label="Email"
-                            outer-class="lg:w-1/2"
-                            validation="required|email|length:1,50"
-                        />
-                        <FormKit
-                            name="password"
-                            type="password"
-                            label="Password"
-                            outer-class="lg:w-1/2"
-                            validation="required"
-                        />
-                    </div>
-                    <FormKit
-                        name="photo"
-                        type="file"
-                        label="Photo"
-                        input-class="file:btn-primary"
-                        accept="image/*"
-                    />
-                </div>
+                <FormKitSchema :schema="formSchema" />
             </FormKit>
         </div>
     </AuthenticatedLayout>
