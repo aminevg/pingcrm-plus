@@ -59,6 +59,7 @@ const submit = (data: typeof form, node?: FormKitNode) => {
                     type="password"
                     validation="required"
                 />
+                <FormKit name="remember" label="Remember me" type="checkbox" />
             </div>
         </FormKit>
     </GuestLayout>

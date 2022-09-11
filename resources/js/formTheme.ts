@@ -10,7 +10,7 @@ const boxClassification = {
     fieldset: "max-w-md border rounded-md shadow p-2",
     legend: "font-bold text-sm",
     wrapper: "flex items-center cursor-pointer gap-x-1",
-    input: "checkbox mt-1",
+    input: "checkbox",
 };
 
 export const formTheme = defaultConfig({
