@@ -3,24 +3,7 @@ import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 import AuthenticatedLayout from "@/Layouts/Authenticated.vue";
 import { FormKitNode, FormKitSchemaNode } from "@formkit/core";
 import { computed } from "vue";
-
-const form = useForm<{
-    first_name: string | null;
-    last_name: string | null;
-    email: string | null;
-    password: string | null;
-    photo: { file: File; name: string }[] | null;
-}>({
-    first_name: null,
-    last_name: null,
-    email: null,
-    password: null,
-    photo: null,
-});
-
-const submitAttrs = computed(() => ({
-    inputClass: form.processing ? "loading" : "",
-}));
+import { FormKitFileValue } from "@formkit/inputs";
 
 const formSchema: FormKitSchemaNode[] = [
     {
@@ -78,12 +61,27 @@ const formSchema: FormKitSchemaNode[] = [
     },
 ];
 
+const form = useForm<{ [key: string]: unknown }>({});
+
+const submitAttrs = computed(() => ({
+    inputClass: form.processing ? "loading" : "",
+}));
+
+const isFile = (obj: unknown): obj is FormKitFileValue =>
+    Array.isArray(obj) &&
+    obj.length > 0 &&
+    obj.every(
+        (value) =>
+            value.name !== undefined &&
+            typeof value.name === "string" &&
+            (value.file === undefined || value.file instanceof File)
+    );
+
 const submit = (_data: typeof form, node?: FormKitNode) =>
     new Promise<void>((resolve) => {
         form.transform((data) => ({
             ...data,
-            photo:
-                data.photo && data.photo.length > 0 ? data.photo[0].file : null,
+            photo: isFile(data.photo) ? data.photo[0].file ?? null : null,
         })).post(route("users.store"), {
             onFinish: () => {
                 node?.setErrors([], form.errors);
