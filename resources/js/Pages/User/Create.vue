@@ -61,28 +61,27 @@ const formSchema: FormKitSchemaNode[] = [
     },
 ];
 
-const form = useForm<{ [key: string]: unknown }>({});
+const form = useForm<{
+    first_name: string | null;
+    last_name: string | null;
+    email: string | null;
+    password: string | null;
+    photo: FormKitFileValue | null;
+}>({
+    first_name: null,
+    last_name: null,
+    email: null,
+    password: null,
+    photo: null,
+});
 
 const submitAttrs = computed(() => ({
     inputClass: form.processing ? "loading" : "",
 }));
 
-const isFile = (obj: unknown): obj is FormKitFileValue =>
-    Array.isArray(obj) &&
-    obj.length > 0 &&
-    obj.every(
-        (value) =>
-            value.name !== undefined &&
-            typeof value.name === "string" &&
-            (value.file === undefined || value.file instanceof File)
-    );
-
 const submit = (_data: typeof form, node?: FormKitNode) =>
     new Promise<void>((resolve) => {
-        form.transform((data) => ({
-            ...data,
-            photo: isFile(data.photo) ? data.photo[0].file ?? null : null,
-        })).post(route("users.store"), {
+        form.post(route("users.store"), {
             onFinish: () => {
                 node?.setErrors([], form.errors);
                 resolve();
@@ -96,8 +95,8 @@ const submit = (_data: typeof form, node?: FormKitNode) =>
         <Head title="Create User" />
         <h1 class="mb-8 text-3xl font-bold">
             <Link class="link link-primary link-hover" href="/users">
-                Users</Link
-            >
+                Users
+            </Link>
             <span class="text-primary"> /</span>
             Create
         </h1>

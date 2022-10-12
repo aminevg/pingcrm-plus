@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -65,16 +66,17 @@ class UserController extends Controller
             "last_name" => ["required", "max:25"],
             "email" => ["required", "max:50", "email", Rule::unique("users")],
             "password" => ["required", "max:255"],
-            "photo" => ["nullable", "image"],
+            "photo" => ["nullable", "array", "max:1"],
+            "photo.*.file" => ["required", "image"],
         ]);
         User::create([
             "first_name" => $validated["first_name"],
             "last_name" => $validated["last_name"],
             "email" => $validated["email"],
             "password" => $validated["password"],
-            "photo_path" => $validated["photo"]
-                ? $validated["photo"]->store("users")
-                : null,
+            "photo_path" => Arr::get($validated, "photo.0.file", null)?->store(
+                "users"
+            ),
         ]);
         return Redirect::route("users.index")->with("success", "User created!");
     }
